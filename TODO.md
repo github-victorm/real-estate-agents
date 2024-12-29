@@ -4,47 +4,44 @@
 
 - [x] Create new project with Next.js
   ```bash
-  npx create-next-app real-estate-contract-automation
-  cd real-estate-contract-automation
+  npx create-next-app@latest real-estate-agents --typescript --tailwind --app --no-src-dir --use-yarn
+  cd real-estate-agents
   ```
 - [x] Install additional dependencies
 
   ```bash
   # Core dependencies
-  npx add langchain @langchain/openai @langchain/community langgraph-js @supabase/supabase-js
+  yarn add langchain @langchain/openai @langchain/community @langchain/langgraph @supabase/supabase-js
 
   # UI Components
-  npx add @radix-ui/react-slot class-variance-authority clsx tailwind-merge lucide-react
+  yarn add @radix-ui/react-slot class-variance-authority clsx tailwind-merge lucide-react
+  yarn add -D @types/node typescript
   npx shadcn-ui@latest init
-
-  # Error monitoring
-  npx add @sentry/nextjs
-  npx @sentry/wizard -i nextjs
   ```
 
-- [ ] Set up environment variables (copy from starter and add our custom ones)
-  - [ ] OpenAI API key
-  - [ ] Supabase configuration
-  - [ ] Application URLs
-  - [ ] Sentry DSN and auth tokens
+- [x] Set up environment variables
+  - [x] OpenAI API key
+  - [x] Supabase configuration (for vector storage)
+  - [x] Application URLs
 
-## 2. Database Setup
+## 2. Database & Vector Storage Setup
 
-- [ ] Create Supabase tables
-  - [ ] contracts (stores contract metadata and content)
-  - [ ] contract_embeddings (stores vector embeddings)
-  - [ ] feedback (stores user feedback)
-  - [ ] users (extends default Supabase auth)
-- [ ] Set up pgvector extension in Supabase
-- [ ] Configure Row Level Security (RLS)
+- [x] Set up Supabase project for vector storage
+  - [x] Create new Supabase project
+  - [x] Enable pgvector extension
+  - [x] Create vector storage tables
+    - [x] contract_embeddings (stores vector embeddings)
+    - [x] contracts (stores contract metadata)
+    - [x] feedback (stores user feedback)
+- [x] Configure basic security policies
 
 ## 3. Project Structure Setup
 
-- [ ] Organize folder structure
-  - [ ] Create app directory structure
-  - [ ] Set up components directory
-    - [ ] Add shadcn/ui base components
-    - [ ] Configure component themes
+- [x] Organize folder structure
+  - [x] Create app directory structure
+  - [x] Set up components directory
+    - [x] Add shadcn/ui base components
+    - [x] Configure component themes
   - [ ] Configure lib directory for utilities
     - [ ] Set up Sentry initialization
     - [ ] Add monitoring utilities
