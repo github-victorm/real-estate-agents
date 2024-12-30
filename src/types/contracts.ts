@@ -3,6 +3,11 @@ import { BaseEntity, Address } from './common';
 // Basic property information
 export type Property = Address & {
   propertyType: 'residential' | 'commercial';
+  squareFootage: number;
+  yearBuilt: number;
+  bedrooms: number;
+  bathrooms: number;
+  additionalFeatures?: string[];
 };
 
 // Parties involved in the contract

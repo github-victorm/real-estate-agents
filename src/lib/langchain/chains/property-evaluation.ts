@@ -62,7 +62,8 @@ export async function evaluateProperty(
     });
 
     return result;
-  } catch (error) {
-    throw new Error(`Failed to evaluate property: ${error.message}`);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    throw new Error(`Failed to evaluate property: ${errorMessage}`);
   }
 } 
