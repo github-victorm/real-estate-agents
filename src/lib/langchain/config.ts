@@ -1,22 +1,17 @@
-import { OpenAI } from '@langchain/openai'
-import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase'
+import { ChatOpenAI } from '@langchain/openai'
 import { OpenAIEmbeddings } from '@langchain/openai'
+import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase'
 import { supabase } from '../supabase/client'
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error('Missing OpenAI API Key')
-}
-
-// Initialize OpenAI
-export const openai = new OpenAI({
-  modelName: 'gpt-4-1106-preview',
+// Initialize OpenAI Chat model
+export const chatModel = new ChatOpenAI({
+  modelName: 'gpt-4o',
   temperature: 0.7,
-  openAIApiKey: process.env.OPENAI_API_KEY,
 })
 
-// Initialize embeddings
+// Initialize embeddings model
 export const embeddings = new OpenAIEmbeddings({
-  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: 'text-embedding-3-small',
 })
 
 // Initialize vector store

@@ -11,7 +11,7 @@
 
   ```bash
   # Core dependencies
-  yarn add langchain @langchain/openai @langchain/community @langchain/langgraph @supabase/supabase-js
+  yarn add langchain @langchain/openai @langchain/community @supabase/supabase-js
 
   # UI Components
   yarn add @radix-ui/react-slot class-variance-authority clsx tailwind-merge lucide-react
@@ -42,10 +42,8 @@
   - [x] Set up components directory
     - [x] Add shadcn/ui base components
     - [x] Configure component themes
-  - [ ] Configure lib directory for utilities
-    - [ ] Set up Sentry initialization
-    - [ ] Add monitoring utilities
-  - [ ] Set up types directory
+  - [x] Configure lib directory for utilities
+  - [x] Set up types directory
 
 ## 4. LangChain Integration
 
@@ -60,16 +58,12 @@
 - [ ] Create custom tools
   - [ ] Contract analysis tool
   - [ ] Similarity search tool
+- [ ] Implement chain orchestration
+  - [ ] Sequential chain processing
+  - [ ] Error handling and retries
+  - [ ] Result validation
 
-## 5. LangGraph Implementation
-
-- [ ] Set up workflow nodes
-  - [ ] Contract generation node
-  - [ ] Feedback collection node
-- [ ] Configure graph edges
-- [ ] Implement state management
-
-## 6. Frontend Implementation
+## 5. Frontend Implementation
 
 - [ ] Set up UI foundation
   - [ ] Install and configure shadcn/ui
@@ -92,7 +86,7 @@
   - [ ] Registration page
   - [ ] Auth middleware
 
-## 7. API Routes Implementation
+## 6. API Routes Implementation
 
 - [ ] Set up contract endpoints
   - [ ] POST /api/contracts/generate
@@ -107,14 +101,14 @@
   - [ ] Error handling
   - [ ] Sentry error tracking
 
-## 8. Vector Search Implementation
+## 7. Vector Search Implementation
 
 - [ ] Set up Supabase vector store
 - [ ] Implement similarity search
 - [ ] Add document processing
 - [ ] Configure embeddings generation
 
-## 9. Testing
+## 8. Testing
 
 - [ ] Set up testing environment
 - [ ] Write unit tests
@@ -124,7 +118,7 @@
 - [ ] Write integration tests
 - [ ] Add end-to-end tests
 
-## 10. Security & Performance
+## 9. Security & Performance
 
 - [ ] Implement RLS policies
 - [ ] Add rate limiting
@@ -141,7 +135,7 @@
   - [ ] Set up transaction tracking
   - [ ] Monitor API endpoints
 
-## 11. Documentation
+## 10. Documentation
 
 - [ ] Update README
 - [ ] Add API documentation
@@ -152,7 +146,7 @@
   - [ ] Component customization guide
   - [ ] Theme configuration
 
-## 12. Deployment
+## 11. Deployment
 
 - [ ] Set up Vercel project
 - [ ] Configure environment variables
@@ -176,6 +170,5 @@
 
 - [Next.js Supabase Starter](https://github.com/vercel/next.js/tree/canary/examples/with-supabase)
 - [LangChain-JS Documentation](https://js.langchain.com/docs)
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 - [Sentry Next.js Documentation](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
 - [shadcn/ui Documentation](https://ui.shadcn.com/docs)

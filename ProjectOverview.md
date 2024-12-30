@@ -19,13 +19,13 @@
 
 ### Goal
 
-Build a real estate contract automation platform using Next.js, LangChain-JS, and LangGraph that dynamically generates professional offer letters/contracts by combining structured input with GPT-4o, leveraging historical offers for context, and enabling continuous improvement through user feedback.
+Build a real estate contract automation platform using Next.js and LangChain-JS that dynamically generates professional offer letters/contracts by combining structured input with GPT-4, leveraging historical offers for context, and enabling continuous improvement through user feedback.
 
 ### Key Objectives
 
 #### 🤖 Automated Contract Generation
 
-- Dynamic offer letter creation using GPT-4o and LangGraph workflows
+- Dynamic offer letter creation using GPT-4 and LangChain's structured chains
 - Integration with LangChain's structured output parsers for consistent formatting
 
 #### 📚 Historical Context Integration
@@ -57,18 +57,16 @@ Build a real estate contract automation platform using Next.js, LangChain-JS, an
 ### Core AI Components
 
 - **LangChain-JS**: ^0.0.197
+
   - Document processing
   - Vector operations
   - Memory management
   - Structured output handling
-- **LangGraph**: ^0.0.5
-
-  - Workflow orchestration
-  - Agent management
-  - State handling
+  - Chain orchestration
+  - State management
 
 - **OpenAI**
-  - GPT-4o for generation
+  - GPT-4 for generation
   - Ada-002 for embeddings
 
 ### Infrastructure
@@ -93,60 +91,59 @@ Build a real estate contract automation platform using Next.js, LangChain-JS, an
 ### Environment Setup
 
 1. Clone the repository:
-   \`\`\`bash
+
+   ```bash
    git clone https://github.com/yourusername/real-estate-contract-automation.git
    cd real-estate-contract-automation
-   \`\`\`
+   ```
 
 2. Install dependencies:
-   \`\`\`bash
+
+   ```bash
    yarn install
-   \`\`\`
+   ```
 
 3. Set up environment variables:
-   \`\`\`bash
+   ```bash
    cp .env.example .env.local
-   \`\`\`
+   ```
 
 Required environment variables:
-\`\`\`env
 
+```env
 # OpenAI Configuration
-
 OPENAI_API_KEY=your_api_key_here
 OPENAI_MODEL=gpt-4
 
 # Supabase Configuration
-
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 # Sentry Configuration
-
 NEXT_PUBLIC_SENTRY_DSN=your_sentry_dsn
 SENTRY_AUTH_TOKEN=your_sentry_auth_token
 SENTRY_PROJECT=your_project_name
 SENTRY_ORG=your_org_name
 
 # Application Configuration
-
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-\`\`\`
+```
 
 4. Initialize the database:
-   \`\`\`bash
+
+   ```bash
    yarn setup:db
-   \`\`\`
+   ```
 
 5. Start the development server:
-   \`\`\`bash
+   ```bash
    yarn dev
-   \`\`\`
+   ```
 
 ## Project Structure
 
-\`\`\`
+```
 src/
 ├── app/ # Next.js App Router
 │ ├── (auth)/ # Auth-related routes
@@ -187,18 +184,9 @@ src/
 │ │ ├── chains/ # Custom chains
 │ │ │ ├── contract/ # Contract chains
 │ │ │ └── feedback/ # Feedback chains
-│ │ ├── agents/ # Custom agents
-│ │ │ ├── contract/ # Contract agents
-│ │ │ └── feedback/ # Feedback agents
 │ │ ├── embeddings/ # Embedding configs
 │ │ ├── prompts/ # Prompt templates
 │ │ └── tools/ # Custom tools
-│ ├── langgraph/ # LangGraph setup
-│ │ ├── nodes/ # Graph nodes
-│ │ │ ├── contract/ # Contract nodes
-│ │ │ └── feedback/ # Feedback nodes
-│ │ ├── edges/ # Graph edges
-│ │ └── workflows/ # Graph workflows
 │ ├── sentry/ # Sentry configuration
 │ │ ├── init.ts # Sentry initialization
 │ │ └── monitoring.ts # Custom monitoring utils
@@ -222,7 +210,7 @@ src/
 │ └── common.ts # Shared types
 ├── middleware.ts # Next.js middleware
 └── package.json # Project dependencies
-\`\`\`
+```
 
 ### Key Improvements in Structure:
 
@@ -240,50 +228,44 @@ src/
 
 3. **LangChain Integration**:
 
-   - Dedicated directories for chains, agents, and tools
+   - Dedicated directories for chains and tools
    - Feature-based organization within LangChain
    - Clear separation of prompts and embeddings
 
-4. **LangGraph Organization**:
-
-   - Separated nodes, edges, and workflows
-   - Feature-based workflow organization
-   - Clear graph composition structure
-
-5. **State Management**:
+4. **State Management**:
 
    - Dedicated store directory
    - Feature-based state organization
    - Clear separation of concerns
 
-6. **Type Safety**:
+5. **Type Safety**:
 
    - Centralized types directory
    - Feature-based type organization
    - Shared types for common interfaces
 
-7. **API Structure**:
+6. **API Structure**:
 
    - RESTful endpoint organization
    - Clear route naming conventions
    - Proper HTTP method handling
 
-8. **Utilities and Hooks**:
+7. **Utilities and Hooks**:
 
    - Custom hooks for reusable logic
    - Utility functions for common operations
    - Clear separation of business logic
 
-9. **UI Components Organization**:
+8. **UI Components Organization**:
 
    - Added shadcn/ui components in the `components/ui` directory
    - Each component follows shadcn/ui's atomic design principles
    - Easy to customize and extend components
 
-10. **Error Monitoring Setup**:
-    - Added Sentry configuration in `lib/sentry`
-    - Centralized error tracking initialization
-    - Custom monitoring utilities
+9. **Error Monitoring Setup**:
+   - Added Sentry configuration in `lib/sentry`
+   - Centralized error tracking initialization
+   - Custom monitoring utilities
 
 This structure provides:
 
@@ -297,48 +279,30 @@ This structure provides:
 
 ## Implementation Details
 
-### LangChain Agent Example
+### LangChain Chain Example
 
-\`\`\`typescript
+```typescript
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
 import { ContractTool } from "./tools/contract";
 
-export const createContractAgent = async () => {
-const model = new ChatOpenAI({
-temperature: 0,
-modelName: "gpt-4o",
-});
+export const createContractChain = async () => {
+  const model = new ChatOpenAI({
+    temperature: 0,
+    modelName: "gpt-4",
+  });
 
-const tools = [
-new ContractTool(),
-// Add more tools as needed
-];
+  const tools = [
+    new ContractTool(),
+    // Add more tools as needed
+  ];
 
-return await initializeAgentExecutorWithOptions(tools, model, {
-agentType: "structured-chat-zero-shot-react-description",
-verbose: true,
-});
+  return await initializeAgentExecutorWithOptions(tools, model, {
+    agentType: "structured-chat-zero-shot-react-description",
+    verbose: true,
+  });
 };
-\`\`\`
-
-### LangGraph Workflow Example
-
-\`\`\`typescript
-import { defineConfig } from "langgraph";
-import { ContractNode } from "./nodes/contract";
-import { FeedbackNode } from "./nodes/feedback";
-
-export const contractWorkflow = defineConfig({
-nodes: {
-contractGeneration: new ContractNode(),
-feedbackCollection: new FeedbackNode(),
-},
-edges: [
-["contractGeneration", "feedbackCollection"],
-],
-});
-\`\`\`
+```
 
 ### Sentry Setup Example
 
@@ -485,7 +449,7 @@ This implementation showcases:
 
 #### 1. Contract Generation Chain
 
-\`\`\`typescript
+```typescript
 // lib/langchain/chains/contract-generation.ts
 import { LLMChain } from "langchain/chains";
 import { PromptTemplate } from "langchain/prompts";
@@ -493,9 +457,9 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { JsonOutputParser } from "langchain/output_parsers";
 
 const contractTemplate = new PromptTemplate({
-template: \`
-You are an expert real estate contract generator.
-Based on the following information, generate a professional offer letter:
+  template: `
+    You are an expert real estate contract generator.
+    Based on the following information, generate a professional offer letter:
 
     Property Details: {propertyDetails}
     Buyer Information: {buyerInfo}
@@ -506,96 +470,95 @@ Based on the following information, generate a professional offer letter:
 
     Generate a contract that includes all necessary legal clauses and follows
     the provided style guidelines while maintaining professional standards.
-
-\`,
-inputVariables: [
-"propertyDetails",
-"buyerInfo",
-"offerTerms",
-"historicalContext",
-"styleGuide"
-],
+  `,
+  inputVariables: [
+    "propertyDetails",
+    "buyerInfo",
+    "offerTerms",
+    "historicalContext",
+    "styleGuide",
+  ],
 });
 
 const outputParser = new JsonOutputParser();
 
 export const createContractChain = () => {
-const llm = new ChatOpenAI({
-temperature: 0.2,
-modelName: "gpt-4",
-});
+  const llm = new ChatOpenAI({
+    temperature: 0.2,
+    modelName: "gpt-4",
+  });
 
-return new LLMChain({
-llm,
-prompt: contractTemplate,
-outputParser,
-verbose: true,
-});
+  return new LLMChain({
+    llm,
+    prompt: contractTemplate,
+    outputParser,
+    verbose: true,
+  });
 };
-\`\`\`
+```
 
 #### 2. Vector Store Setup
 
-\`\`\`typescript
+```typescript
 // lib/langchain/vectorstores/contract-store.ts
 import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { createClient } from "@supabase/supabase-js";
 
 export const initializeVectorStore = () => {
-const embeddings = new OpenAIEmbeddings();
-const client = createClient(
-process.env.NEXT_PUBLIC_SUPABASE_URL!,
-process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+  const embeddings = new OpenAIEmbeddings();
+  const client = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 
-return new SupabaseVectorStore(embeddings, {
-client,
-tableName: "contract_embeddings",
-queryName: "match_contracts",
-});
+  return new SupabaseVectorStore(embeddings, {
+    client,
+    tableName: "contract_embeddings",
+    queryName: "match_contracts",
+  });
 };
-\`\`\`
+```
 
 #### 3. Document Processing
 
-\`\`\`typescript
+```typescript
 // lib/langchain/processors/document-processor.ts
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { Document } from "langchain/document";
 
 export class ContractProcessor {
-private splitter: RecursiveCharacterTextSplitter;
+  private splitter: RecursiveCharacterTextSplitter;
 
-constructor() {
-this.splitter = new RecursiveCharacterTextSplitter({
-chunkSize: 1000,
-chunkOverlap: 200,
-});
-}
+  constructor() {
+    this.splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+    });
+  }
 
-async processDocument(file: File): Promise<Document[]> {
-const loader = new PDFLoader(file);
-const rawDocs = await loader.load();
-return this.splitter.splitDocuments(rawDocs);
+  async processDocument(file: File): Promise<Document[]> {
+    const loader = new PDFLoader(file);
+    const rawDocs = await loader.load();
+    return this.splitter.splitDocuments(rawDocs);
+  }
 }
-}
-\`\`\`
+```
 
 ### API Routes Implementation
 
 #### Contract Generation Endpoint
 
-\`\`\`typescript
+```typescript
 // app/api/contracts/generate/route.ts
 import { NextResponse } from "next/server";
 import { createContractChain } from "@/lib/langchain/chains/contract-generation";
 import { initializeVectorStore } from "@/lib/langchain/vectorstores/contract-store";
 
 export async function POST(request: Request) {
-try {
-const { propertyDetails, buyerInfo, offerTerms } = await request.json();
+  try {
+    const { propertyDetails, buyerInfo, offerTerms } = await request.json();
 
     // Initialize vector store and search for similar contracts
     const vectorStore = initializeVectorStore();
@@ -610,70 +573,71 @@ const { propertyDetails, buyerInfo, offerTerms } = await request.json();
       propertyDetails,
       buyerInfo,
       offerTerms,
-      historicalContext: similarContracts.map(doc => doc.pageContent).join("\\n"),
+      historicalContext: similarContracts
+        .map((doc) => doc.pageContent)
+        .join("\n"),
       styleGuide: "professional, clear, and concise",
     });
 
     return NextResponse.json({ contract: result });
-
-} catch (error) {
-console.error("Contract generation failed:", error);
-return NextResponse.json(
-{ error: "Failed to generate contract" },
-{ status: 500 }
-);
+  } catch (error) {
+    console.error("Contract generation failed:", error);
+    return NextResponse.json(
+      { error: "Failed to generate contract" },
+      { status: 500 }
+    );
+  }
 }
-}
-\`\`\`
+```
 
 ## Testing
 
 ### Unit Tests
 
-\`\`\`typescript
-// **tests**/lib/langchain/chains/contract-generation.test.ts
+```typescript
+// __tests__/lib/langchain/chains/contract-generation.test.ts
 import { createContractChain } from "@/lib/langchain/chains/contract-generation";
 
 describe("Contract Generation Chain", () => {
-it("should generate a valid contract", async () => {
-const chain = createContractChain();
-const result = await chain.call({
-propertyDetails: {
-address: "123 Test St",
-price: "$500,000",
-},
-buyerInfo: {
-name: "John Doe",
-email: "john@example.com",
-},
-offerTerms: {
-closingDate: "2024-03-01",
-contingencies: ["financing", "inspection"],
-},
-historicalContext: "",
-styleGuide: "professional",
-});
+  it("should generate a valid contract", async () => {
+    const chain = createContractChain();
+    const result = await chain.call({
+      propertyDetails: {
+        address: "123 Test St",
+        price: "$500,000",
+      },
+      buyerInfo: {
+        name: "John Doe",
+        email: "john@example.com",
+      },
+      offerTerms: {
+        closingDate: "2024-03-01",
+        contingencies: ["financing", "inspection"],
+      },
+      historicalContext: "",
+      styleGuide: "professional",
+    });
 
     expect(result).toHaveProperty("content");
     expect(result.content).toContain("123 Test St");
-
+  });
 });
-});
-\`\`\`
+```
 
 ## Deployment
 
 ### Production Deployment
 
 1. Build the application:
-   \`\`\`bash
+
+   ```bash
    yarn build
-   \`\`\`
+   ```
 
 2. Deploy to Vercel:
-   \`\`\`bash
+   ```bash
    vercel deploy --prod
-   \`\`\`
+   ```
 
 ### Environment Configuration
 
@@ -693,7 +657,7 @@ Ensure all environment variables are properly set in your Vercel project:
 
 ### Example RLS Policy
 
-\`\`\`sql
+```sql
 -- Enable RLS
 ALTER TABLE contracts ENABLE ROW LEVEL SECURITY;
 
@@ -702,7 +666,7 @@ CREATE POLICY "Users can only access their own contracts"
 ON contracts
 FOR ALL
 USING (auth.uid() = user_id);
-\`\`\`
+```
 
 ## Contributing
 
@@ -723,13 +687,14 @@ USING (auth.uid() = user_id);
 
 ### Commit Messages
 
-Follow conventional commits:
 Follow conventional commits specification:
-\`\`\`
+
+```
 fix: resolve PDF parsing issue
 docs: update deployment guide
 test: add vector store tests
+```
 
 ```
-\`\`\`
+
 ```
